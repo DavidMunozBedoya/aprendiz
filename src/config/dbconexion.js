@@ -4,7 +4,7 @@ const dbconn = await mysql.createConnection({
   host: process.env.HOST,
   user: process.env.DB_USER,
   database: process.env.DB_BASE,
-  password: process.env.DB_PWD,
+  /* password: process.env.DB_PWD, */
 });
 
 try {

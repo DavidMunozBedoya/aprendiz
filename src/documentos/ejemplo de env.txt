@@ -1,6 +1,6 @@
 HOST=localhost
 DB_USER=root
 DB_BASE=adso
-DB_PWD=db1234
+DB_PWD=db1234 si la base de datos tiene clave o contraseña
 PORT=4100
 SALT =3.Wa78xy*

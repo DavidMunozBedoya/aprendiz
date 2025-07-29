@@ -1,14 +1,16 @@
 // importamos la libreria
 import express from "express"; // es6
 import "dotenv/config";
-import aprendiz from "../api/src/modules/aprendices/aprendiz.routes.js";
-import usuario from "../api/src/modules/auth/auth.routes.js";
+import aprendiz from "./src/modules/aprendices/aprendiz.routes.js";
+import usuario from "./src/modules/auth/auth.routes.js";
+import ficha from "./src/modules/ficha/ficha.routes.js";
 import morgan from "morgan";
 
 import cors from "cors";
 //dotenv.config();
 
 const app = express();
+require("dotenv").config()
 app.use(express.json());
 
 /* morgan(function (tokens, req, res) {
@@ -27,7 +29,10 @@ app.use(cors());
 
 app.use("/aprendiz", aprendiz);
 app.use("/usuario", usuario);
+app.use("/ficha", ficha);
 
-app.listen(process.env.PORT, () => {
-  console.log(`API ON in port: ${process.env.PORT}`);
+const port = process.env.PORT || 4100;
+
+app.listen(port, () => {
+  console.log(`API ON in port: ${port}`);
 });
