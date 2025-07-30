@@ -10,7 +10,7 @@ import cors from "cors";
 //dotenv.config();
 
 const app = express();
-require("dotenv").config()
+
 app.use(express.json());
 
 /* morgan(function (tokens, req, res) {
