@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.2-1.fc42
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 11-07-2025 a las 20:04:53
--- Versión del servidor: 10.11.11-MariaDB
--- Versión de PHP: 8.4.8
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 30-07-2025 a las 14:59:44
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -48,6 +48,27 @@ INSERT INTO `aprendiz` (`codigo`, `nombre`, `apellidos`, `fechanace`, `email`, `
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `ficha`
+--
+
+CREATE TABLE `ficha` (
+  `numero_ficha` int(11) NOT NULL,
+  `nombre_programa` varchar(45) NOT NULL,
+  `fecha_inicio` date NOT NULL,
+  `fecha_fin` date NOT NULL,
+  `jornada` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `ficha`
+--
+
+INSERT INTO `ficha` (`numero_ficha`, `nombre_programa`, `fecha_inicio`, `fecha_fin`, `jornada`) VALUES
+(2930764, 'Análisis y Desarrollo de Software', '2025-03-05', '2026-07-31', 'Nocturna');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `user`
 --
 
@@ -72,6 +93,12 @@ ALTER TABLE `aprendiz`
   ADD PRIMARY KEY (`codigo`);
 
 --
+-- Indices de la tabla `ficha`
+--
+ALTER TABLE `ficha`
+  ADD PRIMARY KEY (`numero_ficha`);
+
+--
 -- Indices de la tabla `user`
 --
 ALTER TABLE `user`
@@ -92,7 +119,6 @@ ALTER TABLE `aprendiz`
 --
 ALTER TABLE `user`
   MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
