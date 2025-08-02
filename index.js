@@ -2,7 +2,7 @@
 import express from "express"; // es6
 import "dotenv/config";
 import aprendiz from "./src/modules/aprendices/aprendiz.routes.js";
-import usuario from "./src/modules/user/user.routes.js";
+import usuario from "./src/modules/auth/auth.routes.js";
 import ficha from "./src/modules/ficha/ficha.routes.js";
 import morgan from "morgan";
 

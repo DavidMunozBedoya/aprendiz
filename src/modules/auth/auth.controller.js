@@ -5,7 +5,7 @@ import {
   updateUserDB,
   deleteUserDB,
   authUserDB,
-} from "./user.model.js";
+} from "./auth.model.js";
 
 export async function getAllUsers(req, res) {
   try {

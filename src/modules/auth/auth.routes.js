@@ -6,7 +6,7 @@ import {
   deleteUser,
   updateUser,
   authUser,
-} from "./user.controller.js";
+} from "./auth.controller.js";
 
 const router = express.Router();
 
