@@ -7,7 +7,7 @@ export async function getAprendicesDB() {
 }
 
 export async function getAprendizporIdDB(id) {
-  const [rows] = await dbconn.query("SELECT * FROM aprendiz WHERE id = ?", [
+  const [rows] = await dbconn.query("SELECT * FROM aprendiz WHERE codigo = ?", [
     id,
   ]);
   return rows[0]; // Retorna el primer resultado o undefined si no se encuentra
@@ -21,7 +21,7 @@ export async function createAprendizDB(aprendizData) {
 }
 
 export async function updateAprendizDB(id, aprendizData) {
-  const [result] = await dbconn.query("UPDATE aprendiz SET ? WHERE id = ?", [
+  const [result] = await dbconn.query("UPDATE aprendiz SET ? WHERE codigo = ?", [
     aprendizData,
     id,
   ]);
@@ -29,7 +29,7 @@ export async function updateAprendizDB(id, aprendizData) {
 }
 
 export async function deleteAprendizDB(id) {
-  const [result] = await dbconn.query("DELETE FROM aprendiz WHERE id = ?", [
+  const [result] = await dbconn.query("DELETE FROM aprendiz WHERE codigo = ?", [
     id,
   ]);
   return result;

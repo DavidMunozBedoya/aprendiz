@@ -1,13 +1,11 @@
 import mysql from "mysql2/promise";
 
-/* const dbconn = await mysql.createPool({
+/* const dbconn = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   database: process.env.DB_BASE,
   password: process.env.DB_PWD,
-  waitForConnections: true,
-  connectionLimit: 10,   // se puede ajustar la carga
-  queueLimit: 0,
+  port: process.env.DB_PORT,
 }); */
 
 const dbconn = await mysql.createConnection({
