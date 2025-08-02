@@ -1,14 +1,19 @@
 import mysql from "mysql2/promise";
 
-/* const dbconn = mysql.createPool({
+const dbconn = mysql.createPool({  // Sin await
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   database: process.env.DB_BASE,
   password: process.env.DB_PWD,
-  port: process.env.DB_PORT,
-}); */
+  ssl: {
+    rejectUnauthorized: false  // Para Clever Cloud
+  },
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+});
 
-const dbconn = await mysql.createConnection({
+/* const dbconn = await mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   database: process.env.DB_BASE,
@@ -19,6 +24,6 @@ try {
   await dbconn.connect();
 } catch (err) {
   console.log(err);
-}
+} */
 
 export default dbconn;
