@@ -39,7 +39,7 @@ export async function createUserDB(userData) {
 }
 
 export async function updateUserDB(id, userData) {
-  const [result] = await dbconn.query("UPDATE user SET ? WHERE id = ?", [
+  const [result] = await dbconn.query("UPDATE user SET ? WHERE id_user = ?", [
     userData,
     id,
   ]);
@@ -48,7 +48,7 @@ export async function updateUserDB(id, userData) {
 
 // ejemplo para la formacion: recordar que esto por ley NO se debe hacer
 export async function deleteUserDB(id) {
-  const [result] = await dbconn.query("DELETE FROM user WHERE id = ?", [id]);
+  const [result] = await dbconn.query("DELETE FROM user WHERE id_user = ?", [id]);
   return result;
 }
 

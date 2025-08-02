@@ -22,10 +22,11 @@ export async function getAllUsers(req, res) {
   }
 }
 
-export async function getUserById(id) {
+export async function getUserById(req, res) {
+  const { id } = req.params; // extrae el parametro de consulta  de la url (/id)
   try {
     const user = await getUserById(id);
-    if (!aprendiz) {
+    if (!user) {
       throw {
         status: "error",
         message: "usuario no encontrado.",
@@ -62,7 +63,9 @@ export async function createUser(req, res) {
   }
 }
 
-export async function updateUser(id, data) {
+export async function updateUser(req, res) {
+  const { id } = req.params; // extrae el parametro de consulta  de la url (/id)
+  const data = req.body; // extrae el cuerpo de la peticion (json)
   try {
     const result = await updateUserDB(id, data);
     if (result.affectedRows === 0) {
@@ -84,7 +87,8 @@ export async function updateUser(id, data) {
   }
 }
 
-export async function deleteUser(id) {
+export async function deleteUser(req, res) {
+  const { id } = req.params; // extrae el parametro de consulta  de la url (/id)
   try {
     const result = await deleteUserDB(id);
     if (result.affectedRows === 0) {

@@ -6,7 +6,7 @@ export async function getAprendicesDB() {
   return rows;
 }
 
-export async function getAprendizporIdDB(id) {
+export async function getAprendizporIdDB(id) { // el id hace referencia al campo 'codigo' en la tabla
   const [rows] = await dbconn.query("SELECT * FROM aprendiz WHERE codigo = ?", [
     id,
   ]);
