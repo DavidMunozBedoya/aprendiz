@@ -21,7 +21,7 @@ export async function getAllAprendices(req, res) {
   }
 }
 
-export async function getAprendizById(id) {
+export async function getAprendizById(req, res) {
   const {id} = req.params; // extrae el parametro de consulta  de la url (/id) 
   try {
     const aprendiz = await getAprendizporIdDB(id);
@@ -69,7 +69,7 @@ export async function createAprendiz(req, res) {
   }
 }
 
-export async function updateAprendiz(id, data) {
+export async function updateAprendiz(req, res) {
   const {id} = req.params; // extrae el parametro de consulta  de la url (/id) 
   let data = req.body; // extrae el cuerpo de la peticion (json)
   try {
@@ -93,7 +93,7 @@ export async function updateAprendiz(id, data) {
   }
 }
 
-export async function deleteAprendiz(id) {
+export async function deleteAprendiz(req, res) {
   const {id} = req.params; // extrae el parametro de consulta  de la url (/id)
   try {
     const result = await deleteAprendizDB(id);
