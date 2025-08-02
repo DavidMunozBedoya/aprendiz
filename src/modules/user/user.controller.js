@@ -25,7 +25,7 @@ export async function getAllUsers(req, res) {
 export async function getUserById(req, res) {
   const { id } = req.params; // extrae el parametro de consulta  de la url (/id)
   try {
-    const user = await getUserById(id);
+    const user = await getUserporIdDB(id);
     if (!user) {
       throw {
         status: "error",
