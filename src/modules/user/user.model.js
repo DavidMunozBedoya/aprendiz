@@ -39,6 +39,9 @@ export async function createUserDB(userData) {
 }
 
 export async function updateUserDB(id, userData) {
+  if(userData.user_password){
+    userData.user_password = bcrypt.hashSync(userData.user_password, 11);
+  }
   const [result] = await dbconn.query("UPDATE user SET ? WHERE id_user = ?", [
     userData,
     id,
