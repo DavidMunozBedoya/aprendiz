@@ -229,7 +229,7 @@ export async function authUser(req, res) {
     console.log(user);
 
     if (user) {
-      const token = generarToken(user[0], "4h");
+      const token = generarToken(user[0], process.env.TOKEN_LIFE);
       res.status(200).send({
         status: "ok",
         usuario: user[0].user_email,

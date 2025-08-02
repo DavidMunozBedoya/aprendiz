@@ -48,5 +48,5 @@ export const generarToken = (payload, vida) => {
      * ⚠️ SEGURIDAD: La clave "xyz123" debe cambiarse por una más segura
      * y guardarse en process.env.JWT_SECRET
      */
-    return jwt.sign(payload, "xyz123", options);
+    return jwt.sign(payload, process.env.SALT, options);
 };
