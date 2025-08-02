@@ -1,3 +1,4 @@
+import { generarToken } from "../helpers/administrarToken.js";
 import {
   getUsersDB,
   getUserporIdDB,
@@ -6,6 +7,8 @@ import {
   deleteUserDB,
   authUserDB,
 } from "./auth.model.js";
+
+import validator from "validator";
 
 export async function getAllUsers(req, res) {
   try {
@@ -49,7 +52,56 @@ export async function createUser(req, res) {
   try {
     let data = req.body;
     //Validaciones
+    const errores = [];
+    // valido que el email sea ingresado, quite los espacios vacio
+    //  y sea un email válido
+    if (!data.user_email || validator.isEmpty(data.user_email.trim()) || !validator.isEmail(data.user_email)) {
+      errores.push("El email no es válido.");
+    }
 
+    // valido el nombre de usuario
+    if (!data.user_nombre || validator.isEmpty(data.user_nombre.trim())) {
+      errores.push("El nombre de usuario es requerido.");
+    }
+
+    //valido el apellido de usuario
+    if (!data.user_apellido || validator.isEmpty(data.user_apellido.trim())) {
+      errores.push("El apellido de usuario es requerido.");
+    }
+
+    // VALIDAR CONTRASEÑA
+    if (!data.user_password) {
+      errores.push("La contraseña es requerida.");
+    } else {
+
+      // Valida la complejidad
+      if (!validator.isStrongPassword(data.user_password, {
+        minLength: 8, // Longitud mínima
+        minLowercase: 1, // Mínimo 1 letra minúscula
+        minUppercase: 1, // Mínimo 1 letra mayúscula
+        minNumbers: 1, // Mínimo 1 número
+        minSymbols: 0  // 0 = opcional
+      })) {
+        errores.push("La contraseña debe contener mínimo 8 caracteres y tener al menos 1 mayúscula, 1 minúscula y 1 número.");
+      }
+    }
+
+    //validar telefono
+    if (data.user_telefono && !validator.isEmpty(data.user_telefono)) {
+      if (!validator.isMobilePhone(data.user_telefono, 'es-CO')) {
+        errores.push("Teléfono inválido");
+      }
+    }
+
+    // SI HAY ERRORES, RETORNAR ERROR 400
+    if (errores.length > 0) {
+      return res.status(400).send({
+        status: "error",
+        message: "Errores de validación",
+        errores: errores
+      });
+    }
+    // Si no hay errores, continuar con la creación del usuario
     const result = await createUserDB(data);
     res.status(200).send({
       status: "ok",
@@ -66,7 +118,65 @@ export async function createUser(req, res) {
 export async function updateUser(req, res) {
   const { id } = req.params; // extrae el parametro de consulta  de la url (/id)
   const data = req.body; // extrae el cuerpo de la peticion (json)
+  
   try {
+    // VALIDACIONES
+    const errores = [];
+    
+    // 📧 VALIDAR EMAIL (SOLO SI SE PROPORCIONA)
+    if (data.user_email !== undefined) {
+      if (!data.user_email || validator.isEmpty(data.user_email.trim()) || !validator.isEmail(data.user_email)) {
+        errores.push("El email no es válido.");
+      }
+    }
+    
+    // 👤 VALIDAR NOMBRE (SOLO SI SE PROPORCIONA)
+    if (data.user_nombre !== undefined) {
+      if (!data.user_nombre || validator.isEmpty(data.user_nombre.trim())) {
+        errores.push("El nombre no puede estar vacío.");
+      }
+    }
+    
+    // 👤 VALIDAR APELLIDO (SOLO SI SE PROPORCIONA)
+    if (data.user_apellido !== undefined) {
+      if (!data.user_apellido || validator.isEmpty(data.user_apellido.trim())) {
+        errores.push("El apellido no puede estar vacío.");
+      }
+    }
+    
+    // 🔒 VALIDAR CONTRASEÑA (SOLO SI SE PROPORCIONA)
+    if (data.user_password !== undefined) {
+      if (!data.user_password) {
+        errores.push("La contraseña no puede estar vacía.");
+      } else {
+        if (!validator.isStrongPassword(data.user_password, {
+          minLength: 8,
+          minLowercase: 1,
+          minUppercase: 1,
+          minNumbers: 1,
+          minSymbols: 0
+        })) {
+          errores.push("La contraseña debe contener mínimo 8 caracteres y tener al menos 1 mayúscula, 1 minúscula y 1 número.");
+        }
+      }
+    }
+    
+    // 📱 VALIDAR TELÉFONO (SOLO SI SE PROPORCIONA)
+    if (data.user_telefono !== undefined && !validator.isEmpty(data.user_telefono)) {
+      if (!validator.isMobilePhone(data.user_telefono, 'es-CO')) {
+        errores.push("Teléfono inválido");
+      }
+    }
+    
+    // SI HAY ERRORES, RETORNAR ERROR 400
+    if (errores.length > 0) {
+      return res.status(400).send({
+        status: "error",
+        message: "Errores de validación",
+        errores: errores
+      });
+    }
+
     const result = await updateUserDB(id, data);
     if (result.affectedRows === 0) {
       throw {
@@ -115,12 +225,19 @@ export async function authUser(req, res) {
     let data = req.body;
     // Aquí debes añadir validaciones de entrada de datos --- passport-u otra libreria  !!!!!
 
-    const result = await authUserDB(data);
-    console.log(result);
-    res.status(200).send({
-      status: "ok",
-      data: result,
-    });
+    const user = await authUserDB(data);
+    console.log(user);
+
+    if (user) {
+      const token = generarToken(user[0], "4h");
+      res.status(200).send({
+        status: "ok",
+        usuario: user[0].user_email,
+        foto: user[0].user_foto,
+        token: token,
+      });
+    }
+
   } catch (error) {
     res.status(500).send({
       status: "error",
