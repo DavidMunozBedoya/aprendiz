@@ -11,6 +11,7 @@
  */
 
 import jwt from "jsonwebtoken";
+import { token } from "morgan";
 
 /**
  * GENERAR TOKEN JWT
@@ -50,3 +51,34 @@ export const generarToken = (payload, vida) => {
      */
     return jwt.sign(payload, process.env.SALT, options);
 };
+
+/* middelware para autenticar el token */
+
+export const authMiddleware = (req, res, next) => {
+    try {
+        //token valido o generado desde la peticion req
+        const tokenRecibido = req.headers.authorization;
+        console.log("Token recibido:", tokenRecibido);
+
+        // Mostrar el token en la respuesta Y continuar
+        res.status(200).send({
+            status: "success",
+            message: "Token recibido correctamente - MODO PRUEBA",
+            token: tokenRecibido,
+            timestamp: new Date().toISOString()
+        });
+
+        //validacion del token
+
+        //comparacion del token del request req con el generado del login
+
+        // Si el token es válido, continúa con la siguiente función
+        //next(); // llama la siguiente funcion
+    } catch (error) {
+        res.status(401).send({
+            status: "error",
+            message: "No autorizado, Token Invalido." + error,
+        });        
+    }
+};
+

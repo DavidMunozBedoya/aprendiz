@@ -8,10 +8,12 @@ import {
   authUser,
 } from "./auth.controller.js";
 
+import { authMiddleware } from "../helpers/administrarToken.js";
+
 const router = express.Router();
 
 // Rutas para Aprendices
-router.get("/listartodos", getAllUsers);
+router.get("/listartodos", authMiddleware ,getAllUsers);
 router.get("/listarporid/:id", getUserById);
 router.post("/crear", createUser);
 router.post("/login", authUser);
