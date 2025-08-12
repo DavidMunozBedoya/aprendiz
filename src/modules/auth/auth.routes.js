@@ -30,7 +30,7 @@ const subir = multer({ storage: almacenamiento });
 router.get("/listartodos", authMiddleware ,getAllUsers);
 router.get("/listarporid/:id", getUserById);
 router.post("/crear", createUser);
-router.post("/subirImagen", [subir.single("file0")], subirImagen);
+router.post("/subirimagen", [subir.single("file0")], subirImagen);
 router.post("/login", authUser);
 router.put("/actualizar/:id", updateUser);
 router.delete("/borrar/:id", deleteUser);
