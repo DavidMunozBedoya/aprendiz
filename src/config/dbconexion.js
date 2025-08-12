@@ -13,6 +13,7 @@ const dbconn = mysql.createPool({  // Sin await
   queueLimit: 0,
 });
 
+
 /* const dbconn = await mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -24,6 +25,8 @@ try {
   await dbconn.connect();
 } catch (err) {
   console.log(err);
-} */
+}
+
+console.log("DB conectada"); */
 
 export default dbconn;

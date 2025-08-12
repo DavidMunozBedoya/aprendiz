@@ -1,3 +1,4 @@
+import { escape } from "mysql2";
 import { generarToken } from "../helpers/administrarToken.js";
 import {
   getUsersDB,
@@ -6,6 +7,7 @@ import {
   updateUserDB,
   deleteUserDB,
   authUserDB,
+  updateImgDB,
 } from "./auth.model.js";
 
 import validator from "validator";
@@ -247,10 +249,48 @@ export async function authUser(req, res) {
 }
 
 export async function subirImagen(req, res) {
+  //tratamiento del archivo subido a la api
+  //console.log(req.file);
 
-  console.log(req.file);
+  if(!req.file && !req.files){
+    return res.status(404).send({
+      status: "error",
+      message: "petición invalida!",
+    })
+  }
 
-  res.send({
-    file: req.file
+  //validar la extension del archivo
+  let archivo = req.file.originalname;
+  let archivoSeparado = archivo.split(".");
+  let extension = archivoSeparado[1];
+
+  console.log(archivo, archivoSeparado, extension);
+  
+  //comprobar la extension y actualizacion de la DB
+
+  if(extension != "png" && extension != "jpg" && extension != "PNG" && extension != "JPG"){
+    return res.status(400).send({
+      status: "error",
+      message: "formato de imagen no valido",
+    });
+  }
+
+  // recibimos el parametro del id
+  let userid = req.params.id
+
+  // recibimos la ruta de la imagen 
+  let rutaImg = req.file.filename
+
+  // actualizamos en la DB
+  let resultado = await updateImgDB(rutaImg, userid);
+  // enviamos mensaje de exito
+
+  return res.status(200).send({
+    status: "ok",
+    message: "Actualizado Exitosamente " + resultado,
   })
+
+
 }
+
+
