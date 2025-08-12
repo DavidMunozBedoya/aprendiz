@@ -1,5 +1,6 @@
 // importamos la libreria
 import express from "express"; // es6
+
 import "dotenv/config";
 import aprendiz from "./src/modules/aprendices/aprendiz.routes.js";
 import usuario from "./src/modules/auth/auth.routes.js";

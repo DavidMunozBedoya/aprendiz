@@ -245,3 +245,12 @@ export async function authUser(req, res) {
     });
   }
 }
+
+export async function subirImagen(req, res) {
+
+  console.log(req.files);
+
+  res.send({
+    files: req.files
+  })
+}
