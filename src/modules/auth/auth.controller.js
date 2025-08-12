@@ -248,9 +248,9 @@ export async function authUser(req, res) {
 
 export async function subirImagen(req, res) {
 
-  console.log(req.files);
+  console.log(req.file);
 
   res.send({
-    files: req.files
+    file: req.file
   })
 }
