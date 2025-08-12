@@ -1,5 +1,7 @@
 import { escape } from "mysql2";
 import { generarToken } from "../helpers/administrarToken.js";
+import { enviarCorreo } from "../../libs/mailer.js";  
+
 import {
   getUsersDB,
   getUserporIdDB,
@@ -94,6 +96,13 @@ export async function createUser(req, res) {
         errores.push("Teléfono inválido");
       }
     }
+
+    // enviar correo de confirmacion
+    await enviarCorreo.sendMail(
+      req.body.user_email,
+      "Bienvenido",
+      "Te haz registrado exitosamente!!!"
+    );
 
     // SI HAY ERRORES, RETORNAR ERROR 400
     if (errores.length > 0) {
