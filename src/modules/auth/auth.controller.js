@@ -98,7 +98,7 @@ export async function createUser(req, res) {
     }
 
     // enviar correo de confirmacion
-    await enviarCorreo.sendMail(
+    await enviarCorreo(
       req.body.user_email,
       "Bienvenido",
       "Te haz registrado exitosamente!!!"
