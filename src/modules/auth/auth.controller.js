@@ -116,6 +116,7 @@ export async function createUser(req, res) {
     const result = await createUserDB(data);
     res.status(200).send({
       status: "ok",
+      message: "Usuario creado exitosamente, se ha enviado un correo de confirmación",
       data: result,
     });
   } catch (error) {
