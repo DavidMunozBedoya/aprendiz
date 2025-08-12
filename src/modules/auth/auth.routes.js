@@ -1,6 +1,5 @@
 import express from "express";
 import multer from "multer"; // middleWare para cargar archivos
-import { subirImagen } from "./auth.controller.js";
 
 import {
   getAllUsers,
@@ -9,6 +8,7 @@ import {
   deleteUser,
   updateUser,
   authUser,
+  subirImagen,
 } from "./auth.controller.js";
 
 import { authMiddleware } from "../helpers/administrarToken.js";
